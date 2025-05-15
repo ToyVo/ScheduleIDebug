@@ -1,10 +1,8 @@
 ﻿using MelonLoader;
 using HarmonyLib;
-using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 #if NETSTANDARD2_1
-using ScheduleOne;
 using ScheduleOne.Properties;
 using ScheduleOne.Product;
 using ScheduleOne.PlayerScripts;
@@ -12,7 +10,6 @@ using FishNet.Component.Spawning;
 using FishNet.Object;
 using VLB;
 #elif NET6_0
-using Il2CppScheduleOne;
 using Il2CppScheduleOne.Properties;
 using Il2CppScheduleOne.Product;
 using Il2CppScheduleOne.PlayerScripts;
@@ -38,35 +35,21 @@ namespace ScheduleIDebug
 
     public class ModObject : MonoBehaviour
     {
+        private int _counter = 0;
         private void Update()
         {
             if (Input.GetKeyUp(KeyCode.P))
             {
-                Debug.Property(Registry.GetItem<PropertyItemDefinition>("cuke").Properties[0]);
-                Debug.Property(Registry.GetItem<PropertyItemDefinition>("banana").Properties[0]);
-                Debug.Property(Registry.GetItem<PropertyItemDefinition>("paracetamol").Properties[0]);
-                Debug.Property(Registry.GetItem<PropertyItemDefinition>("donut").Properties[0]);
-                Debug.Property(Registry.GetItem<PropertyItemDefinition>("viagra").Properties[0]);
-                Debug.Property(Registry.GetItem<PropertyItemDefinition>("mouthwash").Properties[0]);
-                Debug.Property(Registry.GetItem<PropertyItemDefinition>("flumedicine").Properties[0]);
-                Debug.Property(Registry.GetItem<PropertyItemDefinition>("gasoline").Properties[0]);
-                Debug.Property(Registry.GetItem<PropertyItemDefinition>("energydrink").Properties[0]);
-                Debug.Property(Registry.GetItem<PropertyItemDefinition>("motoroil").Properties[0]);
-                Debug.Property(Registry.GetItem<PropertyItemDefinition>("megabean").Properties[0]);
-                Debug.Property(Registry.GetItem<PropertyItemDefinition>("chili").Properties[0]);
-                Debug.Property(Registry.GetItem<PropertyItemDefinition>("battery").Properties[0]);
-                Debug.Property(Registry.GetItem<PropertyItemDefinition>("iodine").Properties[0]);
-                Debug.Property(Registry.GetItem<PropertyItemDefinition>("addy").Properties[0]);
-                Debug.Property(Registry.GetItem<PropertyItemDefinition>("horsesemen").Properties[0]);
+                var properties = PropertyUtility.Instance.AllProperties;
+                PrintProperty(properties[_counter++ % properties.Count]);
+                PrintProperty(properties[_counter++ % properties.Count]);
+                PrintProperty(properties[_counter++ % properties.Count]);
             }
         }
-    }
-
-    public static class Debug
-    {
-        public static void Property(Property property)
+        
+        public void PrintProperty(Property property)
         {
-            var message =$"{property}";
+            var message = $"{property}";
             message += $"\n * AddBaseValueMultiple {property.AddBaseValueMultiple}";
             message += $"\n * Addictiveness {property.Addictiveness}";
             message += $"\n * Description {property.Description}";
@@ -86,36 +69,6 @@ namespace ScheduleIDebug
         }
     }
     
-    [HarmonyPatch(typeof(PropertyMixCalculator), nameof(PropertyMixCalculator.MixProperties))]
-    public static class MixPropertiesPatch
-    {
-        [HarmonyPrefix]
-        public static bool Prefix(
-            ref List<Property> existingProperties,
-            ref Property newProperty,
-            ref EDrugType drugType,
-            ref List<Property> __result
-        )
-        {
-            MelonLogger.Msg($"Adding {newProperty.Name} to {drugType}");
-            foreach (var property in existingProperties)
-            {
-                Debug.Property(property);
-            }
-            Debug.Property(newProperty);
-            return true;
-        }
-
-        [HarmonyPostfix]
-        public static void Postfix(ref List<Property> __result)
-        {
-            foreach (var property in __result)
-            {
-                Debug.Property(property);
-            }
-        }
-    }
-
     [HarmonyPatch(typeof(PlayerSpawner), "InitializeOnce")]
     public static class PlayerSpawnerPatch
     {
