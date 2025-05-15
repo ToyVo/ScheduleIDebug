@@ -3,28 +3,28 @@
         <TargetFrameworks>netstandard2.1;net6.0</TargetFrameworks>
         <Nullable>enable</Nullable>
         <Platforms>x64</Platforms>
-<!--        Windows: uncomment one of each -->
-       <MelonDir>$(HOME)\AppData\Roaming\r2modmanPlus-local\ScheduleI\profiles\Default</MelonDir>
-<!--        <MelonDir>$(HOME)\AppData\Roaming\com.kesomennen\schedule-i\profiles\Default</MelonDir>-->
-<!--        If MelonLoader is intalled in GameDir and not with a mod manager, then set MelonDir to the same as GameDir -->
-<!--        <MelonDir>C:\Program Files (x86)\Steam\steamapps\common\Schedule I</MelonDir>-->
-<!--        <MelonDir>D:\SteamLibrary\steamapps\common\Schedule I</MelonDir>-->
-        <GameDir>C:\Program Files (x86)\Steam\steamapps\common\Schedule I</GameDir>
-<!--        <GameDir>D:\SteamLibrary\steamapps\common\Schedule I</GameDir>-->
+        <!-- Windows: uncomment one of each -->
+         <MelonDir>$(HOME)\AppData\Roaming\r2modmanPlus-local\ScheduleI\profiles\Default</MelonDir> 
+        <!-- <MelonDir>$(HOME)\AppData\Roaming\com.kesomennen\schedule-i\profiles\Default</MelonDir> -->
+        <!-- If MelonLoader is intalled in GameDir and not with a mod manager, then set MelonDir to the same as GameDir -->
+        <!-- <MelonDir>C:\Program Files (x86)\Steam\steamapps\common\Schedule I</MelonDir> -->
+        <!-- <MelonDir>D:\SteamLibrary\steamapps\common\Schedule I</MelonDir> -->
+         <GameDir>C:\Program Files (x86)\Steam\steamapps\common\Schedule I</GameDir> 
+        <!-- <GameDir>D:\SteamLibrary\steamapps\common\Schedule I</GameDir> -->
 
-<!--        Mac: uncomment one of each -->
-<!--        <MelonDir>$(HOME)\Library\Application Support\CrossOver\Bottles\Steam\drive_c\users\crossover\AppData\Roaming\r2modmanPlus-local\ScheduleI\profiles\Default</MelonDir>-->
-<!--        If MelonLoader is intalled in GameDir and not with a mod manager, then set MelonDir to the same as GameDir -->
-<!--        <MelonDir>$(HOME)\Library\Application Support\CrossOver\Bottles\Steam\drive_c\Program Files (x86)\Steam\steamapps\common\Schedule I</MelonDir>-->
-<!--        <GameDir>$(HOME)\Library\Application Support\CrossOver\Bottles\Steam\drive_c\Program Files (x86)\Steam\steamapps\common\Schedule I</GameDir>-->
-<!--        <GameDir>$(HOME)\Library\Containers\Whisky\Bottles\<TODO_UUID>\drive_c\Program Files (x86)\Steam\steamapps\common\Schedule I</GameDir>-->
+        <!-- Mac: uncomment one of each -->
+        <!-- <MelonDir>$(HOME)\Library\Application Support\CrossOver\Bottles\Steam\drive_c\users\crossover\AppData\Roaming\r2modmanPlus-local\ScheduleI\profiles\Default</MelonDir> -->
+        <!-- If MelonLoader is intalled in GameDir and not with a mod manager, then set MelonDir to the same as GameDir -->
+        <!-- <MelonDir>$(HOME)\Library\Application Support\CrossOver\Bottles\Steam\drive_c\Program Files (x86)\Steam\steamapps\common\Schedule I</MelonDir> -->
+        <!-- <GameDir>$(HOME)\Library\Application Support\CrossOver\Bottles\Steam\drive_c\Program Files (x86)\Steam\steamapps\common\Schedule I</GameDir> -->
+        <!-- <GameDir>$(HOME)\Library\Containers\Whisky\Bottles\<TODO_UUID>\drive_c\Program Files (x86)\Steam\steamapps\common\Schedule I</GameDir> -->
 
-<!--        Linux: uncomment one of each -->
-<!--        <MelonDir>$(HOME)\.config\r2modmanPlus-local\ScheduleI\profiles\Default</MelonDir>-->
-<!--        <MelonDir>$(HOME)\.local\share\com.kesomannen.gale\schedule-i\profiles\Default</MelonDir>-->
-<!--        If MelonLoader is intalled in GameDir and not with a mod manager, then set MelonDir to the same as GameDir -->
-<!--        <MelonDir>$(HOME)\.local\share\Steam\steamapps\common\Schedule I</GameDir>-->
-<!--        <GameDir>$(HOME)\.local\share\Steam\steamapps\common\Schedule I</GameDir>-->
+        <!-- Linux: uncomment one of each -->
+        <!-- <MelonDir>$(HOME)\.config\r2modmanPlus-local\ScheduleI\profiles\Default</MelonDir> -->
+        <!-- <MelonDir>$(HOME)\.local\share\com.kesomannen.gale\schedule-i\profiles\Default</MelonDir> -->
+        <!-- If MelonLoader is intalled in GameDir and not with a mod manager, then set MelonDir to the same as GameDir -->
+        <!-- <MelonDir>$(HOME)\.local\share\Steam\steamapps\common\Schedule I</GameDir> -->
+        <!-- <GameDir>$(HOME)\.local\share\Steam\steamapps\common\Schedule I</GameDir> -->
     </PropertyGroup>
     <ItemGroup>
         <Reference Include="0Harmony">
@@ -37,9 +37,43 @@
             <HintPath Condition="'$(targetFramework)' == 'net6.0'">$(MelonDir)\MelonLoader\Il2CppAssemblies\Assembly-CSharp.dll</HintPath>
             <Private>false</Private>
         </Reference>
+        <Reference Include="FishNet.Runtime" Condition="'$(targetFramework)' == 'netstandard2.1'">
+            <HintPath Condition="'$(targetFramework)' == 'netstandard2.1'">$(GameDir)\Schedule I_Data\Managed\FishNet.Runtime.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+        <Reference Include="Il2CppFishNet.Runtime" Condition="'$(targetFramework)' == 'net6.0'">
+            <HintPath Condition="'$(targetFramework)' == 'net6.0'">$(MelonDir)\MelonLoader\Il2CppAssemblies\Il2CppFishNet.Runtime.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+        <Reference Include="Il2CppInterop.Runtime" Condition="'$(targetFramework)' == 'net6.0'">
+            <HintPath Condition="'$(targetFramework)' == 'net6.0'">$(MelonDir)\MelonLoader\net6\Il2CppInterop.Runtime.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+        <Reference Include="Il2Cppmscorlib" Condition="'$(targetFramework)' == 'net6.0'">
+            <HintPath Condition="'$(targetFramework)' == 'net6.0'">$(MelonDir)\MelonLoader\Il2CppAssemblies\Il2Cppmscorlib.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+        <Reference Include="Il2CppNewtonSoft.Json" Condition="'$(targetFramework)' == 'net6.0'">
+            <HintPath Condition="'$(targetFramework)' == 'net6.0'">$(MelonDir)\MelonLoader\Il2CppAssemblies\Il2CppNewtonSoft.Json.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+        <Reference Include="Il2CppSystem.Core" Condition="'$(targetFramework)' == 'net6.0'">
+            <HintPath Condition="'$(targetFramework)' == 'net6.0'">$(MelonDir)\MelonLoader\Il2CppAssemblies\Il2CppSystem.Core.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
         <Reference Include="MelonLoader">
             <HintPath Condition="'$(targetFramework)' == 'netstandard2.1'">$(MelonDir)\MelonLoader\net35\MelonLoader.dll</HintPath>
             <HintPath Condition="'$(targetFramework)' == 'net6.0'">$(MelonDir)\MelonLoader\net6\MelonLoader.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+        <Reference Include="Unity.InputSystem">
+            <HintPath Condition="'$(targetFramework)' == 'netstandard2.1'">$(GameDir)\Schedule I_Data\Managed\Unity.InputSystem.dll</HintPath>
+            <HintPath Condition="'$(targetFramework)' == 'net6.0'">$(MelonDir)\MelonLoader\Il2CppAssemblies\Unity.InputSystem.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+        <Reference Include="Unity.TextMeshPro">
+            <HintPath Condition="'$(targetFramework)' == 'netstandard2.1'">$(GameDir)\Schedule I_Data\Managed\Unity.TextMeshPro.dll</HintPath>
+            <HintPath Condition="'$(targetFramework)' == 'net6.0'">$(MelonDir)\MelonLoader\Il2CppAssemblies\Unity.TextMeshPro.dll</HintPath>
             <Private>false</Private>
         </Reference>
         <Reference Include="UnityEngine">
@@ -52,13 +86,20 @@
             <HintPath Condition="'$(targetFramework)' == 'net6.0'">$(MelonDir)\MelonLoader\Il2CppAssemblies\UnityEngine.CoreModule.dll</HintPath>
             <Private>false</Private>
         </Reference>
-        <Reference Include="Il2Cppmscorlib" Condition="'$(targetFramework)' == 'net6.0'">
-            <HintPath Condition="'$(targetFramework)' == 'net6.0'">$(MelonDir)\MelonLoader\Il2CppAssemblies\Il2Cppmscorlib.dll</HintPath>
+        <Reference Include="UnityEngine.InputLegacyModule">
+            <HintPath Condition="'$(targetFramework)' == 'netstandard2.1'">$(GameDir)\Schedule I_Data\Managed\UnityEngine.InputLegacyModule.dll</HintPath>
+            <HintPath Condition="'$(targetFramework)' == 'net6.0'">$(MelonDir)\MelonLoader\Il2CppAssemblies\UnityEngine.InputLegacyModule.dll</HintPath>
             <Private>false</Private>
         </Reference>
-        <Reference Include="Il2CppInterop.Runtime" Condition="'$(targetFramework)' == 'net6.0'">
-            <HintPath Condition="'$(targetFramework)' == 'net6.0'">$(MelonDir)\MelonLoader\net6\Il2CppInterop.Runtime.dll</HintPath>
+        <Reference Include="UnityEngine.UI">
+            <HintPath Condition="'$(targetFramework)' == 'netstandard2.1'">$(GameDir)\Schedule I_Data\Managed\UnityEngine.UI.dll</HintPath>
+            <HintPath Condition="'$(targetFramework)' == 'net6.0'">$(MelonDir)\MelonLoader\Il2CppAssemblies\UnityEngine.UI.dll</HintPath>
             <Private>false</Private>
         </Reference>
     </ItemGroup>
+    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+        <!-- <Exec Condition="'$(targetFramework)' == 'netstandard2.1'" Command="COPY &quot;$(TargetPath)&quot; &quot;$(MelonDir)\Mods\ToyVo-ScheduleIDebug\&quot;" /> -->
+        <!-- Assuming develpment is done with mono version, copy to mod directory after building -->
+        <Exec Condition="'$(targetFramework)' == 'netstandard2.1'" Command="cp &quot;$(TargetPath)&quot; &quot;$(MelonDir)/Mods/ToyVo-ScheduleIDebug/&quot;"/>
+    </Target>
 </Project>

@@ -1,15 +1,27 @@
 ﻿using MelonLoader;
 using HarmonyLib;
 using System.Collections.Generic;
+using System.Reflection;
+using UnityEngine;
 #if NETSTANDARD2_1
+using ScheduleOne;
 using ScheduleOne.Properties;
 using ScheduleOne.Product;
+using ScheduleOne.PlayerScripts;
+using FishNet.Component.Spawning;
+using FishNet.Object;
+using VLB;
 #elif NET6_0
+using Il2CppScheduleOne;
 using Il2CppScheduleOne.Properties;
 using Il2CppScheduleOne.Product;
+using Il2CppScheduleOne.PlayerScripts;
+using Il2CppFishNet.Component.Spawning;
+using Il2CppFishNet.Object;
+using Il2CppVLB;
 #endif
 
-[assembly: MelonInfo(typeof(ScheduleIDebug.Main), "ScheduleIDebug", "1.0.0", "ToyVo")]
+[assembly: MelonInfo(typeof(ScheduleIDebug.Main), "ScheduleIDebug", "1.0.0", "ToyVo", "https://github.com/ToyVo/ScheduleIDebug/releases")]
 [assembly: MelonGame("TVGS", "Schedule I")]
 
 namespace ScheduleIDebug
@@ -21,6 +33,32 @@ namespace ScheduleIDebug
             MelonLogger.Msg("Initializing ScheduleIDebug");
             new HarmonyLib.Harmony("dev.toyvo.scheduleidebug").PatchAll();
             MelonLogger.Msg("Initialized ScheduleIDebug");
+        }
+    }
+
+    public class ModObject : MonoBehaviour
+    {
+        private void Update()
+        {
+            if (Input.GetKeyUp(KeyCode.P))
+            {
+                Debug.Property(Registry.GetItem<PropertyItemDefinition>("cuke").Properties[0]);
+                Debug.Property(Registry.GetItem<PropertyItemDefinition>("banana").Properties[0]);
+                Debug.Property(Registry.GetItem<PropertyItemDefinition>("paracetamol").Properties[0]);
+                Debug.Property(Registry.GetItem<PropertyItemDefinition>("donut").Properties[0]);
+                Debug.Property(Registry.GetItem<PropertyItemDefinition>("viagra").Properties[0]);
+                Debug.Property(Registry.GetItem<PropertyItemDefinition>("mouthwash").Properties[0]);
+                Debug.Property(Registry.GetItem<PropertyItemDefinition>("flumedicine").Properties[0]);
+                Debug.Property(Registry.GetItem<PropertyItemDefinition>("gasoline").Properties[0]);
+                Debug.Property(Registry.GetItem<PropertyItemDefinition>("energydrink").Properties[0]);
+                Debug.Property(Registry.GetItem<PropertyItemDefinition>("motoroil").Properties[0]);
+                Debug.Property(Registry.GetItem<PropertyItemDefinition>("megabean").Properties[0]);
+                Debug.Property(Registry.GetItem<PropertyItemDefinition>("chili").Properties[0]);
+                Debug.Property(Registry.GetItem<PropertyItemDefinition>("battery").Properties[0]);
+                Debug.Property(Registry.GetItem<PropertyItemDefinition>("iodine").Properties[0]);
+                Debug.Property(Registry.GetItem<PropertyItemDefinition>("addy").Properties[0]);
+                Debug.Property(Registry.GetItem<PropertyItemDefinition>("horsesemen").Properties[0]);
+            }
         }
     }
 
@@ -76,5 +114,36 @@ namespace ScheduleIDebug
                 Debug.Property(property);
             }
         }
+    }
+
+    [HarmonyPatch(typeof(PlayerSpawner), "InitializeOnce")]
+    public static class PlayerSpawnerPatch
+    {
+        [HarmonyPostfix]
+        public static void Postfix(PlayerSpawner __instance)
+        {
+            // Get the player
+            var playerPrefabField = typeof(PlayerSpawner).GetField("_playerPrefab", BindingFlags.NonPublic | BindingFlags.Instance);
+            if (playerPrefabField == null)
+            {
+                MelonLogger.Error("PlayerSpawner field not found");
+                return;
+            }
+            var playerPrefab = playerPrefabField.GetValue(__instance);
+            if (playerPrefab == null)
+            {
+                MelonLogger.Error("PlayerSpawner field is null");
+                return;           
+            }
+            var player = ((NetworkObject)playerPrefab).GetComponent<Player>();
+            if (player == null)
+            {
+                MelonLogger.Error("PlayerSpawner player is null");
+                return;           
+            }
+            
+            // Attach our mod object to the player
+            player.GetOrAddComponent<ModObject>();
+        }   
     }
 }
