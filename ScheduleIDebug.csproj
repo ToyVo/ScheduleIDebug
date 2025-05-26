@@ -4,12 +4,12 @@
         <Nullable>enable</Nullable>
         <Platforms>x64</Platforms>
         <!-- Windows: uncomment one of each -->
-         <MelonDir>$(HOME)\AppData\Roaming\r2modmanPlus-local\ScheduleI\profiles\Default</MelonDir> 
+        <MelonDir>$(HOME)\AppData\Roaming\r2modmanPlus-local\ScheduleI\profiles\Default</MelonDir>
         <!-- <MelonDir>$(HOME)\AppData\Roaming\com.kesomennen\schedule-i\profiles\Default</MelonDir> -->
         <!-- If MelonLoader is intalled in GameDir and not with a mod manager, then set MelonDir to the same as GameDir -->
         <!-- <MelonDir>C:\Program Files (x86)\Steam\steamapps\common\Schedule I</MelonDir> -->
         <!-- <MelonDir>D:\SteamLibrary\steamapps\common\Schedule I</MelonDir> -->
-         <GameDir>C:\Program Files (x86)\Steam\steamapps\common\Schedule I</GameDir> 
+        <GameDir>C:\Program Files (x86)\Steam\steamapps\common\Schedule I</GameDir>
         <!-- <GameDir>D:\SteamLibrary\steamapps\common\Schedule I</GameDir> -->
 
         <!-- Mac: uncomment one of each -->
@@ -53,8 +53,8 @@
             <HintPath Condition="'$(targetFramework)' == 'net6.0'">$(MelonDir)\MelonLoader\Il2CppAssemblies\Il2Cppmscorlib.dll</HintPath>
             <Private>false</Private>
         </Reference>
-        <Reference Include="Il2CppNewtonSoft.Json" Condition="'$(targetFramework)' == 'net6.0'">
-            <HintPath Condition="'$(targetFramework)' == 'net6.0'">$(MelonDir)\MelonLoader\Il2CppAssemblies\Il2CppNewtonSoft.Json.dll</HintPath>
+        <Reference Include="Il2CppNewtonsoft.Json" Condition="'$(targetFramework)' == 'net6.0'">
+            <HintPath Condition="'$(targetFramework)' == 'net6.0'">$(MelonDir)\MelonLoader\Il2CppAssemblies\Il2CppNewtonsoft.Json.dll</HintPath>
             <Private>false</Private>
         </Reference>
         <Reference Include="Il2CppSystem.Core" Condition="'$(targetFramework)' == 'net6.0'">
@@ -98,8 +98,8 @@
         </Reference>
     </ItemGroup>
     <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-        <!-- <Exec Condition="'$(targetFramework)' == 'netstandard2.1'" Command="COPY &quot;$(TargetPath)&quot; &quot;$(MelonDir)\Mods\ToyVo-ScheduleIDebug\&quot;" /> -->
+        <Exec Condition="'$(targetFramework)' == 'netstandard2.1'" Command="COPY &quot;$(TargetPath)&quot; &quot;$(MelonDir)\Mods\&quot;" />
         <!-- Assuming develpment is done with mono version, copy to mod directory after building -->
-        <Exec Condition="'$(targetFramework)' == 'netstandard2.1'" Command="cp &quot;$(TargetPath)&quot; &quot;$(MelonDir)/Mods/ToyVo-ScheduleIDebug/&quot;"/>
+        <!-- <Exec Condition="'$(targetFramework)' == 'netstandard2.1'" Command="cp &quot;$(TargetPath)&quot; &quot;$(MelonDir)/Mods/&quot;"/> -->
     </Target>
 </Project>
